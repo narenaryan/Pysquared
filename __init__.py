@@ -22,5 +22,5 @@ class PySquared(object):
 		json_data = [{'Attribute' : k, 'Value': v} for k,v in attr.values()]
 
 
-l = PySquared('u$r075de1e5561edbc1181e757698a32f0b', 'cb9ea1d8492e93d7684d99e20625fb8692f982c2')
+
 
