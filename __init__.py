@@ -2,11 +2,11 @@ import requests,json
 
 class PySquared(object):
     
-    def __init__(self, lead_squared_access_key, lead_squared_secret_key):
-        # Creates a LeadSquared client object
+    def __init__(self, lead_squared_access_key, lead_squared_secret_key):   
+        # Creates a LeadSquared client object. Create object using Pysquared.PySquared("access_key", "secret_key")
         self.end_point =  'https://api.leadsquared.com/v2/'
-        self.lead_squared_access_key = lead_squared_access_key
-        self.lead_squared_secret_key = lead_squared_secret_key
+        self.lead_squared_access_key = lead_squared_access_key  
+        self.lead_squared_secret_key = lead_squared_secret_key 
 
     def schema(self):
         schema_url = self.end_point + 'LeadManagement.svc/LeadsMetaData.Get'
@@ -80,7 +80,7 @@ class PySquared(object):
 
     def daily_leads(self, date, pg_no):
         """
-        :gets details about a phone number. It creates one if not existing.
+        :get a dump of all leads created on a particular day. Paginate the results using Page Number parameter for multiple calls
         """
         lead_url = 'https://api.leadsquared.com/v2/LeadManagement.svc/Leads.Get?accessKey=%s&secretKey=%s'%(self.lead_squared_access_key,self.lead_squared_secret_key)
         headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
