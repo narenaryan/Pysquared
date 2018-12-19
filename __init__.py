@@ -59,7 +59,8 @@ class PySquared(object):
                     "LookupValue": ph_no,
                 },
                 "Columns": {
-                    "Include_CSV": "ProspectID, FirstName, LastName, EmailAddress"
+                    #"Include_CSV": "ProspectID, FirstName, LastName, EmailAddress"   ## Adding more fields below
+                    "Include_CSV": "ProspectID, FirstName, LastName, EmailAddress, CreatedByName"
                 },
                 "Sorting": {
                     "ColumnName": "CreatedOn",
@@ -77,3 +78,32 @@ class PySquared(object):
         return res 
 
 
+    def daily_leads(self, date, pg_no):
+        """
+        :gets details about a phone number. It creates one if not existing.
+        """
+        lead_url = 'https://api.leadsquared.com/v2/LeadManagement.svc/Leads.Get?accessKey=%s&secretKey=%s'%(self.lead_squared_access_key,self.lead_squared_secret_key)
+        headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+        dic = {  
+                "Parameter": {
+                    "LookupName": "CreatedOn",
+                    "LookupValue": date,
+                },
+                "Columns": {
+                    #"Include_CSV": "ProspectID, FirstName, LastName, EmailAddress"   ## Adding more fields below
+                    "Include_CSV": "ProspectID, FirstName, LastName, EmailAddress, CreatedByName, Phone"
+                },
+                "Sorting": {
+                    "ColumnName": "CreatedOn",
+                    "Direction": "1"
+                },
+                "Paging": {
+                    "PageIndex": pg_no,
+                    "PageSize": 1000
+                }
+        }
+        res = requests.post(lead_url, data = json.dumps(dic), headers = headers).json()
+        if not res:
+            lead = self.create_lead({'FirstName': ph_no, 'Phone' : ph_no})
+            return lead
+        return res 
